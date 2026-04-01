@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a single-file static web application for The Life Church Memphis Auditorium. It provides an interactive floor plan reference tool for broadcast/live event technicians to look up stage box connections and wiring throughout the auditorium.
+This is a single-file static web application for HSL Wall Boxes at The Life Church. It provides an interactive floor plan reference tool for broadcast/live event technicians to look up wall box and stage box connections and wiring.
 
 ## Development
 
