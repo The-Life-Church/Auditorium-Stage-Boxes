@@ -1,6 +1,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+[hidden] { display: none !important; }
 :root {
   --bg0: #0e0f11;
   --bg1: #161719;
@@ -28,6 +29,53 @@
   --mono: 'JetBrains Mono', monospace;
 }
 body { background: var(--bg0); color: var(--text-primary); font-family: var(--font); }
+#auth-root { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+#auth-loading, #auth-gate {
+  width: min(100%, 460px);
+  background: linear-gradient(180deg, rgba(38,41,46,0.95), rgba(22,23,25,0.98));
+  border: 0.5px solid var(--border-med);
+  border-radius: 16px;
+  box-shadow: 0 30px 90px rgba(0,0,0,0.35);
+  padding: 28px 24px;
+}
+.auth-kicker { font-size: 10px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 10px; }
+.auth-title { font-size: 24px; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 8px; }
+.auth-copy { color: var(--text-secondary); line-height: 1.5; font-size: 14px; }
+.auth-copy strong { color: var(--text-primary); }
+.auth-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.auth-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: transform 0.12s, filter 0.12s, background 0.12s;
+}
+.auth-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+.auth-btn.primary { background: var(--accent-blue); color: #fff; }
+.auth-btn.secondary { background: transparent; color: var(--text-secondary); border: 0.5px solid var(--border-med); }
+.auth-note {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 0.5px solid var(--border);
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.5;
+  font-family: var(--mono);
+}
+.auth-error {
+  margin-top: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--accent-red-dim);
+  border: 0.5px solid rgba(232,99,90,0.3);
+  color: var(--accent-red);
+  font-size: 12px;
+  line-height: 1.4;
+}
 #app { padding: 20px 16px 40px; max-width: 900px; margin: 0 auto; }
 
 /* ── Header ── */
@@ -38,6 +86,7 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 .status-pill { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
 .updated-label { font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
 
 /* ── Legend ── */
 .legend { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 16px; }
@@ -152,6 +201,28 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 </style>
 
 <div id="app">
+<div id="auth-root">
+  <div id="auth-loading">
+    <div class="auth-kicker">The Life Church</div>
+    <div class="auth-title">Checking access…</div>
+    <p class="auth-copy">This tool is limited to approved <strong>@life.church</strong> accounts.</p>
+  </div>
+
+  <div id="auth-gate" hidden>
+    <div class="auth-kicker">Internal Access</div>
+    <div class="auth-title">Sign in to open the box reference</div>
+    <p class="auth-copy">Use your Google Workspace account. The app will only unlock for <strong>@life.church</strong> users.</p>
+    <div class="auth-actions">
+      <button class="auth-btn primary" id="login-btn" type="button">Sign in with Google</button>
+    </div>
+    <div class="auth-note">
+      Fill in the Firebase config block near the bottom of this file before deploying.
+    </div>
+    <div class="auth-error" id="auth-error" hidden></div>
+  </div>
+</div>
+
+<div id="app-shell" hidden>
 
   <!-- Header -->
   <div class="page-header">
@@ -160,7 +231,10 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
     <div class="header-meta">
       <div class="status-pill"><span class="status-dot"></span>Live Reference</div>
       <div class="updated-label" id="updated-label">Last edited: never</div>
-      <button class="close-btn" onclick="window.print()" style="font-size:10px;padding:3px 10px;">⎙ Print</button>
+      <div class="header-actions">
+        <button class="close-btn" onclick="window.print()" style="font-size:10px;padding:3px 10px;">⎙ Print</button>
+        <button class="close-btn" id="sign-out-btn" type="button">Sign out</button>
+      </div>
     </div>
   </div>
 
@@ -247,6 +321,7 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
     <div id="no-results" style="display:none;text-align:center;padding:24px;color:var(--text-muted);font-size:12px;font-family:var(--mono)">No matching ports found</div>
   </div>
 </div>
+</div>
 
 <!-- Modal -->
 <div class="modal-backdrop" id="modal">
@@ -262,7 +337,129 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
+var allowedDomain = 'life.church';
+var firebaseConfig = {
+  apiKey: 'REPLACE_ME',
+  authDomain: 'REPLACE_ME.firebaseapp.com',
+  projectId: 'REPLACE_ME',
+  appId: 'REPLACE_ME'
+};
+
+var authReady = false;
+var firebaseEnabled = false;
+var auth = null;
+var loginBtn = document.getElementById('login-btn');
+var signOutBtn = document.getElementById('sign-out-btn');
+
+function showAuthError(message) {
+  var el = document.getElementById('auth-error');
+  el.textContent = message;
+  el.hidden = false;
+}
+
+function clearAuthError() {
+  document.getElementById('auth-error').hidden = true;
+}
+
+function setView(view) {
+  document.getElementById('auth-root').hidden = view === 'app';
+  document.getElementById('auth-loading').hidden = view !== 'loading';
+  document.getElementById('auth-gate').hidden = view !== 'gate';
+  document.getElementById('app-shell').hidden = view !== 'app';
+}
+
+function isFirebaseConfigured() {
+  return firebaseConfig.apiKey !== 'REPLACE_ME' &&
+    firebaseConfig.authDomain !== 'REPLACE_ME.firebaseapp.com' &&
+    firebaseConfig.projectId !== 'REPLACE_ME' &&
+    firebaseConfig.appId !== 'REPLACE_ME';
+}
+
+function initAuth() {
+  if (!window.firebase) {
+    setView('gate');
+    showAuthError('Firebase scripts failed to load.');
+    return;
+  }
+
+  if (!isFirebaseConfigured()) {
+    setView('gate');
+    showAuthError('Firebase config is still using placeholder values.');
+    return;
+  }
+
+  firebase.initializeApp(firebaseConfig);
+  auth = firebase.auth();
+  firebaseEnabled = true;
+  authReady = true;
+
+  auth.onAuthStateChanged(async function(user) {
+    clearAuthError();
+
+    if (!user) {
+      setView('gate');
+      return;
+    }
+
+    try {
+      var tokenResult = await user.getIdTokenResult(true);
+      var email = (user.email || '').toLowerCase();
+      var hostedDomain = (tokenResult.claims.hd || '').toLowerCase();
+      var emailAllowed = email.endsWith('@' + allowedDomain);
+      var hdAllowed = hostedDomain === allowedDomain;
+
+      if (!emailAllowed || !hdAllowed) {
+        await auth.signOut();
+        setView('gate');
+        showAuthError('Access is limited to Google Workspace accounts in the ' + allowedDomain + ' domain.');
+        return;
+      }
+
+      setView('app');
+    } catch (error) {
+      setView('gate');
+      showAuthError(error.message || 'Unable to verify your account.');
+    }
+  });
+}
+
+async function signIn() {
+  clearAuthError();
+
+  if (!firebaseEnabled || !auth) {
+    showAuthError('Firebase is not configured yet.');
+    return;
+  }
+
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({
+    hd: allowedDomain,
+    prompt: 'select_account'
+  });
+
+  try {
+    await auth.signInWithPopup(provider);
+  } catch (error) {
+    showAuthError(error.message || 'Sign-in failed.');
+  }
+}
+
+async function signOut() {
+  if (!auth) return;
+  await auth.signOut();
+}
+
+loginBtn.addEventListener('click', signIn);
+signOutBtn.addEventListener('click', function() {
+  signOut().catch(function(error) {
+    showAuthError(error.message || 'Sign-out failed.');
+  });
+});
+initAuth();
+
 var boxes = {
   'WB4-01': { name:'WB4-01', label:'Stage Left', type:'Wall Box', typeKey:'wb', sections:[
     {label:'Audio tie lines',color:'blue',items:['ATIE 39','ATIE 40','ATIE 41','ATIE 42','ATIE 43','ATIE 44','ATIE 45','ATIE 46','ATIE 47','ATIE 48','ATIE 49','ATIE 50','ATIE 51','ATIE 52','ATIE 53','ATIE 54','ATIE 55','ATIE 56','ATIE 57','ATIE 58','ATIE 59','ATIE 60','ATIE 61','ATIE 62','ATIE 63','ATIE 64']},
