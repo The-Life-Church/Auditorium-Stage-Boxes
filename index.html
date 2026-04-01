@@ -340,7 +340,8 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script>
-var allowedDomain = 'thelifechurch.com';
+var allowedEmailDomains = ['thelifechurch.com'];
+var allowedHostedDomains = ['thelifechurch.com'];
 var firebaseConfig = {
   apiKey: 'AIzaSyAdnlsADdi0iSXmV8umMiuI0IHUl0w7Ygs',
   authDomain: 'tlc-production-apps-2026.firebaseapp.com',
@@ -408,13 +409,15 @@ function initAuth() {
       var tokenResult = await user.getIdTokenResult(true);
       var email = (user.email || '').toLowerCase();
       var hostedDomain = (tokenResult.claims.hd || '').toLowerCase();
-      var emailAllowed = email.endsWith('@' + allowedDomain);
-      var hdAllowed = hostedDomain === allowedDomain;
+      var emailAllowed = allowedEmailDomains.some(function(domain) {
+        return email.endsWith('@' + domain);
+      });
+      var hdAllowed = !hostedDomain || allowedHostedDomains.indexOf(hostedDomain) >= 0;
 
       if (!emailAllowed || !hdAllowed) {
         await auth.signOut();
         setView('gate');
-        showAuthError('Access is limited to Google Workspace accounts in the ' + allowedDomain + ' domain.');
+        showAuthError('Access is limited to approved The Life Church Google Workspace accounts.');
         return;
       }
 
@@ -436,7 +439,7 @@ async function signIn() {
 
   var provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({
-    hd: allowedDomain,
+    hd: allowedHostedDomains[0],
     prompt: 'select_account'
   });
 
