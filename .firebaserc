@@ -1,5 +1,14 @@
 {
   "projects": {
-    "default": "tlc-production-apps-2026"
+    "default": "the-life-church-apps"
+  },
+  "targets": {
+    "the-life-church-apps": {
+      "hosting": {
+        "tlc-wall-boxes": [
+          "tlc-wall-boxes"
+        ]
+      }
+    }
   }
 }
