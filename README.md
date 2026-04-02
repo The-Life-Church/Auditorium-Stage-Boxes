@@ -4,14 +4,14 @@ Static internal reference app for wall box and stage box connections at The Life
 
 Public app:
 
-- https://hsl-wall-boxes.web.app
+- https://tlc-wall-boxes.web.app
 
 ## Repo Notes
 
 - Main branch: `main`
 - GitHub repo: `https://github.com/The-Life-Church/HSL-Wall-Boxes`
-- Firebase project ID: `tlc-production-apps-2026`
-- Firebase Hosting site: `hsl-wall-boxes`
+- Firebase project ID: `the-life-church-apps`
+- Firebase Hosting site: `tlc-wall-boxes`
 
 ## Development
 
