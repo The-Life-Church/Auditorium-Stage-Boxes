@@ -14,17 +14,17 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden] { display: none !important; }
 :root {
-  --bg0: #0e0f11;
-  --bg1: #161719;
-  --bg2: #1e2023;
-  --bg3: #26292e;
-  --bg4: #2e3238;
-  --border: rgba(255,255,255,0.08);
-  --border-med: rgba(255,255,255,0.14);
-  --border-hi: rgba(255,255,255,0.22);
-  --text-primary: #e8eaed;
-  --text-secondary: #8b9099;
-  --text-muted: #555c66;
+  --bg0: #f4f4f5;
+  --bg1: #ffffff;
+  --bg2: #f0f0f2;
+  --bg3: #e5e5e8;
+  --bg4: #dbdbde;
+  --border: rgba(0,0,0,0.08);
+  --border-med: rgba(0,0,0,0.14);
+  --border-hi: rgba(0,0,0,0.22);
+  --text-primary: #111113;
+  --text-secondary: #4a4a52;
+  --text-muted: #767680;
   --accent-blue: #6096c8;
   --accent-blue-dim: rgba(96,150,200,0.15);
   --accent-green: #60a878;
@@ -40,33 +40,50 @@
   --mono: 'JetBrains Mono', monospace;
 }
 
-/* ── Light theme ── */
-[data-theme="light"] {
-  --bg0: #f4f4f6;
-  --bg1: #ffffff;
-  --bg2: #efefef;
-  --bg3: #e5e5e8;
-  --bg4: #dbdbde;
-  --border: rgba(0,0,0,0.08);
-  --border-med: rgba(0,0,0,0.14);
-  --border-hi: rgba(0,0,0,0.22);
-  --text-primary: #111113;
-  --text-secondary: #4a4a52;
-  --text-muted: #767680;
+/* ── Dark theme override ── */
+[data-theme="dark"] {
+  --bg0: #0e0f11;
+  --bg1: #161719;
+  --bg2: #1e2023;
+  --bg3: #26292e;
+  --bg4: #2e3238;
+  --border: rgba(255,255,255,0.08);
+  --border-med: rgba(255,255,255,0.14);
+  --border-hi: rgba(255,255,255,0.22);
+  --text-primary: #e8eaed;
+  --text-secondary: #8b9099;
+  --text-muted: #555c66;
 }
-[data-theme="light"] .room-bg { fill: #e0e0e5; stroke: rgba(0,0,0,0.12); }
-[data-theme="light"] .auditorium-label { fill: rgba(0,0,0,0.08); }
-[data-theme="light"] #btn-WB4-01 rect, [data-theme="light"] #btn-WB3-07 rect { fill: #f4f0e0; }
-[data-theme="light"] #btn-WB2-01 rect, [data-theme="light"] #btn-WB2-02 rect,
-[data-theme="light"] #btn-WB6-01 rect, [data-theme="light"] #btn-WB6-02 rect,
-[data-theme="light"] #btn-WB2-07 rect, [data-theme="light"] #btn-WB3-11 rect { fill: #e8eff8; }
-[data-theme="light"] #btn-FB1-01 rect, [data-theme="light"] #btn-FB1-02 rect,
-[data-theme="light"] #btn-FB1-03 rect, [data-theme="light"] #btn-FB1-04 rect,
-[data-theme="light"] #btn-FB1-05 rect, [data-theme="light"] #btn-FB1-06 rect { fill: #eeecf8; }
-[data-theme="light"] #btn-FB2-01 rect, [data-theme="light"] #btn-FB2-02 rect,
-[data-theme="light"] #btn-FB2-03 rect, [data-theme="light"] #btn-FB2-04 rect { fill: #eaf4ee; }
-[data-theme="light"] #btn-FOH-L rect, [data-theme="light"] #btn-FOH-M rect,
-[data-theme="light"] #btn-FOH-R rect { fill: #f8eded; }
+
+/* ── SVG floor plan — default (light) ── */
+.room-bg { fill: #e0e0e5; stroke: rgba(0,0,0,0.12); }
+.auditorium-label { fill: rgba(0,0,0,0.08); }
+#btn-WB4-01 rect, #btn-WB3-07 rect { fill: #f4f0e0; }
+#btn-WB2-01 rect, #btn-WB2-02 rect,
+#btn-WB6-01 rect, #btn-WB6-02 rect,
+#btn-WB2-07 rect, #btn-WB3-11 rect { fill: #e8eff8; }
+#btn-FB1-01 rect, #btn-FB1-02 rect,
+#btn-FB1-03 rect, #btn-FB1-04 rect,
+#btn-FB1-05 rect, #btn-FB1-06 rect { fill: #eeecf8; }
+#btn-FB2-01 rect, #btn-FB2-02 rect,
+#btn-FB2-03 rect, #btn-FB2-04 rect { fill: #eaf4ee; }
+#btn-FOH-L rect, #btn-FOH-M rect,
+#btn-FOH-R rect { fill: #f8eded; }
+
+/* ── SVG floor plan — dark theme ── */
+[data-theme="dark"] .room-bg { fill: #161719; stroke: rgba(255,255,255,0.15); }
+[data-theme="dark"] .auditorium-label { fill: rgba(255,255,255,0.08); }
+[data-theme="dark"] #btn-WB4-01 rect, [data-theme="dark"] #btn-WB3-07 rect { fill: #141208; }
+[data-theme="dark"] #btn-WB2-01 rect, [data-theme="dark"] #btn-WB2-02 rect,
+[data-theme="dark"] #btn-WB6-01 rect, [data-theme="dark"] #btn-WB6-02 rect,
+[data-theme="dark"] #btn-WB2-07 rect, [data-theme="dark"] #btn-WB3-11 rect { fill: #080e18; }
+[data-theme="dark"] #btn-FB1-01 rect, [data-theme="dark"] #btn-FB1-02 rect,
+[data-theme="dark"] #btn-FB1-03 rect, [data-theme="dark"] #btn-FB1-04 rect,
+[data-theme="dark"] #btn-FB1-05 rect, [data-theme="dark"] #btn-FB1-06 rect { fill: #0e0c18; }
+[data-theme="dark"] #btn-FB2-01 rect, [data-theme="dark"] #btn-FB2-02 rect,
+[data-theme="dark"] #btn-FB2-03 rect, [data-theme="dark"] #btn-FB2-04 rect { fill: #081210; }
+[data-theme="dark"] #btn-FOH-L rect, [data-theme="dark"] #btn-FOH-M rect,
+[data-theme="dark"] #btn-FOH-R rect { fill: #140c0c; }
 body { background: var(--bg0); color: var(--text-primary); font-family: var(--font); }
 #auth-root { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
 #auth-loading, #auth-gate {
@@ -115,12 +132,25 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
   font-size: 12px;
   line-height: 1.4;
 }
-#app { padding: 20px 16px 40px; max-width: 900px; margin: 0 auto; }
+#app { padding: 0; max-width: none; margin: 0; }
 
-/* ── Header ── */
-.page-header { text-align: center; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 0.5px solid var(--border); }
-.page-header h1 { font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-primary); }
-.page-header p { font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 5px; }
+/* ── App header ── */
+.app-header { background: #252525; border-bottom: 3px solid #f2a649; width: 100%; }
+.app-header-inner {
+  max-width: 900px; margin: 0 auto; padding: 14px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+}
+.app-header-brand h1 { font-size: 17px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #f2a649; margin: 0; }
+.app-header-brand span { display: block; font-size: 9px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 3px; }
+.app-header .header-meta { gap: 12px; margin-top: 0; }
+.app-header .status-pill { color: rgba(255,255,255,0.55); }
+.app-header .updated-label { color: rgba(255,255,255,0.4); }
+.app-header .close-btn { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.65); }
+.app-header .close-btn:hover { background: rgba(255,255,255,0.16); color: #fff; border-color: rgba(255,255,255,0.3); }
+.app-main { }
+.app-inner { max-width: 900px; margin: 0 auto; padding: 20px 16px 40px; }
+
+/* ── Shared header utils ── */
 .header-meta { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 10px; }
 .status-pill { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); font-family: var(--mono); }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
@@ -133,7 +163,7 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 .legend-dot { width: 8px; height: 8px; border-radius: 1px; }
 
 /* ── Floor plan ── */
-.floor-plan { background: var(--bg1); border: 0.5px solid var(--border-med); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.floor-plan { background: var(--bg1); border: 0.5px solid var(--border-med); border-radius: 14px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
 .box-btn { cursor: pointer; }
 .box-hit-area { fill: transparent !important; }
 .box-btn rect { transition: opacity 0.12s; }
@@ -141,7 +171,7 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 .box-btn.active rect { stroke-width: 2 !important; filter: brightness(1.3); }
 
 /* ── Map detail panel ── */
-#detail-panel { border: 0.5px solid var(--border-med); border-radius: 10px; background: var(--bg1); overflow: hidden; margin-bottom: 32px; }
+#detail-panel { border: 0.5px solid var(--border-med); border-radius: 14px; background: var(--bg1); overflow: hidden; margin-bottom: 32px; box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
 .detail-header { padding: 12px 16px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--bg2); }
 .detail-title { font-size: 14px; font-weight: 700; color: var(--text-primary); letter-spacing: 0.04em; font-family: var(--mono); }
 .detail-subtitle { font-size: 11px; color: var(--text-muted); margin-top: 2px; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -170,7 +200,7 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 /* ── Accordion ── */
 .section-heading { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 0.5px solid var(--border); }
 .accordion { display: flex; flex-direction: column; gap: 4px; }
-.acc-item { border: 0.5px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg1); transition: border-color 0.15s; }
+.acc-item { border: 0.5px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg1); transition: border-color 0.15s; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
 .acc-item:hover { border-color: var(--border-med); }
 .acc-item.open { border-color: var(--border-med); }
 .acc-item.hidden { display: none; }
@@ -185,7 +215,7 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 .acc-trigger:hover { background: var(--bg2); }
 .acc-left { display: flex; align-items: center; gap: 10px; }
 .acc-name { font-size: 13px; font-weight: 700; color: var(--text-primary); font-family: var(--mono); letter-spacing: 0.02em; }
-.acc-badge { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.08em; }
+.acc-badge { font-size: 9px; font-weight: 600; padding: 2px 9px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.08em; }
 .acc-badge.type-wb   { background: var(--accent-blue-dim);   color: var(--accent-blue); }
 .acc-badge.type-fbst { background: var(--accent-purple-dim); color: var(--accent-purple); }
 .acc-badge.type-fb   { background: var(--accent-green-dim);  color: var(--accent-green); }
@@ -307,20 +337,24 @@ button, .box-btn { touch-action: manipulation; }
 
 <div id="app-shell" hidden>
 
-  <!-- Header -->
-  <div class="page-header">
-    <h1>HSL Wall Boxes</h1>
-    <p>The Life Church</p>
-    <div class="header-meta">
-      <div class="status-pill"><span class="status-dot"></span>Live Reference</div>
-      <div class="updated-label" id="updated-label">Last edited: never</div>
-      <div class="header-actions">
-        <button class="close-btn" id="theme-toggle" onclick="toggleTheme()" style="font-size:10px;padding:3px 10px;">☀ Light</button>
-        <button class="close-btn" id="print-btn" onclick="window.print()" style="font-size:10px;padding:3px 10px;">⎙ Print</button>
-        <button class="close-btn" id="sign-out-btn" type="button">Sign out</button>
+  <header class="app-header">
+    <div class="app-header-inner">
+      <div class="app-header-brand">
+        <h1>HSL Wall Boxes</h1>
+        <span>The Life Church</span>
+      </div>
+      <div class="header-meta">
+        <div class="status-pill"><span class="status-dot"></span>Live Reference</div>
+        <div class="updated-label" id="updated-label">Last edited: never</div>
+        <div class="header-actions">
+          <button class="close-btn" id="theme-toggle" onclick="toggleTheme()" style="font-size:10px;padding:3px 10px;">☾ Dark</button>
+          <button class="close-btn" id="print-btn" onclick="window.print()" style="font-size:10px;padding:3px 10px;">⎙ Print</button>
+          <button class="close-btn" id="sign-out-btn" type="button">Sign out</button>
+        </div>
       </div>
     </div>
-  </div>
+  </header>
+  <main class="app-main"><div class="app-inner">
 
   <!-- Legend -->
   <div class="legend">
@@ -396,7 +430,7 @@ button, .box-btn { touch-action: manipulation; }
 
     <!-- Search -->
     <div class="search-wrap">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="white" stroke-width="1.2"/><line x1="10" y1="10" x2="14" y2="14" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4.5" stroke="currentColor" stroke-width="1.2"/><line x1="10" y1="10" x2="14" y2="14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
       <input type="text" id="search" placeholder="Search port or box name…" oninput="onSearch(this.value)"/>
       <span class="search-count" id="search-count"></span>
     </div>
@@ -404,6 +438,7 @@ button, .box-btn { touch-action: manipulation; }
     <div class="accordion" id="accordion"></div>
     <div id="no-results" style="display:none;text-align:center;padding:24px;color:var(--text-muted);font-size:12px;font-family:var(--mono)">No matching ports found</div>
   </div>
+  </div></main>
 </div>
 </div>
 
@@ -840,13 +875,13 @@ document.getElementById('modal').addEventListener('click',function(e){ if(e.targ
 
 /* ── Theme toggle ── */
 function toggleTheme(){
-  var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('tlc_theme', next);
   document.getElementById('theme-toggle').textContent = next === 'dark' ? '☀ Light' : '☾ Dark';
 }
 (function initTheme(){
-  var theme = localStorage.getItem('tlc_theme') || 'dark';
+  var theme = localStorage.getItem('tlc_theme') || 'light';
   document.documentElement.setAttribute('data-theme', theme);
   document.getElementById('theme-toggle').textContent = theme === 'dark' ? '☀ Light' : '☾ Dark';
 })();
