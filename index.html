@@ -227,9 +227,41 @@ button, .box-btn { touch-action: manipulation; }
   #print-btn { display: none; }
   .floor-plan { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
   .floor-plan svg { width: 620px; }
-  .conn-line { padding: 11px 14px; }
-  .conn-port { min-width: 90px; }
-  .edit-btn { padding: 8px 14px; }
+
+  /* Stacked connection rows */
+  .conn-line { flex-wrap: wrap; row-gap: 4px; padding: 10px 14px; }
+  .conn-port { flex: 1; min-width: unset; font-size: 13px; order: 1; }
+  .edit-btn { order: 2; padding: 8px 14px; }
+  .conn-dest { width: 100%; order: 3; }
+
+  /* Prevent iOS auto-zoom on input focus */
+  #search, .modal textarea { font-size: 16px; }
+
+  /* Bottom sheet modal */
+  .modal-backdrop { align-items: flex-end; }
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 24px 20px 40px;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.4);
+    animation: sheet-up 0.25s ease;
+  }
+  .modal::before {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: var(--border-hi);
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+  .modal-actions { flex-direction: column-reverse; gap: 8px; }
+  .modal-actions button { width: 100%; padding: 14px; font-size: 14px; border-radius: 10px; }
+  @keyframes sheet-up {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
 }
 
 /* ── Print styles ── */
