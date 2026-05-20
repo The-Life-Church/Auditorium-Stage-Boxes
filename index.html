@@ -230,9 +230,9 @@ button, .box-btn { touch-action: manipulation; }
 
   /* Stacked connection rows */
   .conn-line { flex-wrap: wrap; row-gap: 4px; padding: 10px 14px; }
-  .conn-port { flex: 1; min-width: unset; font-size: 13px; order: 1; }
-  .edit-btn { order: 2; padding: 8px 14px; }
-  .conn-dest { width: 100%; order: 3; }
+  .conn-port { flex: 1 1 auto; min-width: 0; font-size: 13px; order: 1; }
+  .edit-btn { flex: 0 0 auto; order: 2; padding: 8px 14px; }
+  .conn-dest { flex: 0 0 100%; order: 3; }
 
   /* Prevent iOS auto-zoom on input focus */
   #search, .modal textarea { font-size: 16px; }
