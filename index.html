@@ -135,6 +135,7 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 /* ── Floor plan ── */
 .floor-plan { background: var(--bg1); border: 0.5px solid var(--border-med); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
 .box-btn { cursor: pointer; }
+.box-hit-area { fill: transparent !important; }
 .box-btn rect { transition: opacity 0.12s; }
 .box-btn:hover rect { opacity: 0.75; }
 .box-btn.active rect { stroke-width: 2 !important; filter: brightness(1.3); }
@@ -862,6 +863,7 @@ document.querySelectorAll('.box-btn').forEach(function(g){
   hit.setAttribute('width', parseFloat(r.getAttribute('width')) + 12);
   hit.setAttribute('height', parseFloat(r.getAttribute('height')) + 16);
   hit.setAttribute('fill', 'transparent');
+  hit.setAttribute('class', 'box-hit-area');
   g.insertBefore(hit, g.firstChild);
 });
 </script>
