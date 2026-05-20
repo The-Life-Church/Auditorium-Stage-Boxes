@@ -251,6 +251,9 @@ body { background: var(--bg0); color: var(--text-primary); font-family: var(--fo
 .modal label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 6px; }
 .modal textarea { width: 100%; background: var(--bg3); border: 0.5px solid var(--border-med); border-radius: 6px; padding: 10px 12px; font-size: 13px; font-family: var(--mono); color: var(--text-primary); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.15s; }
 .modal textarea:focus { border-color: var(--accent-blue); }
+.modal input[type="text"] { width: 100%; background: var(--bg3); border: 0.5px solid var(--border-med); border-radius: 6px; padding: 10px 12px; font-size: 13px; font-family: var(--mono); color: var(--text-primary); outline: none; transition: border-color 0.15s; margin-bottom: 12px; }
+.modal input[type="text"]:focus { border-color: var(--accent-blue); }
+.modal input[type="text"]::placeholder { color: var(--text-muted); }
 .modal textarea::placeholder { color: var(--text-muted); }
 .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
 .modal-actions button { padding: 7px 18px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: var(--font); letter-spacing: 0.04em; transition: all 0.12s; }
@@ -271,7 +274,7 @@ button, .box-btn { touch-action: manipulation; }
   .conn-dest { flex: 0 0 100%; order: 3; }
 
   /* Prevent iOS auto-zoom on input focus */
-  #search, .modal textarea { font-size: 16px; }
+  #search, .modal textarea, .modal input[type="text"] { font-size: 16px; }
 
   /* Bottom sheet modal */
   .modal-backdrop { align-items: flex-end; }
@@ -449,6 +452,8 @@ button, .box-btn { touch-action: manipulation; }
   <div class="modal">
     <div class="modal-eyebrow" id="modal-box-name"></div>
     <h3 id="modal-title"></h3>
+    <label for="modal-name-input">Port label</label>
+    <input type="text" id="modal-name-input" placeholder="">
     <label for="modal-input">Connected to</label>
     <textarea id="modal-input" placeholder="e.g. ATEM Input 1 · Rack B, Row 3…"></textarea>
     <div class="modal-actions">
@@ -756,6 +761,12 @@ function saveDest(){ try{ localStorage.setItem('tlc_dest', JSON.stringify(destin
 function destKey(b,p){ return b+'||'+p; }
 function safeId(k){ return k.replace(/[^a-z0-9]/gi,'_'); }
 
+var names = {};
+try { names = JSON.parse(localStorage.getItem('tlc_names') || '{}'); } catch(e){}
+function saveNames(){ try{ localStorage.setItem('tlc_names', JSON.stringify(names)); }catch(e){} }
+function nameKey(b,p){ return b+'||name||'+p; }
+function displayName(b,p){ return names[nameKey(b,p)] || p; }
+
 function updateTimestamp(){
   var t = localStorage.getItem('tlc_updated');
   document.getElementById('updated-label').textContent = t ? 'Last edited: '+t : 'Last edited: never';
@@ -772,7 +783,7 @@ function showBox(id){
   var html='<div class="detail-header"><div><p class="detail-title">'+d.name+(d.label?' — '+d.label:'')+'</p><p class="detail-subtitle">'+d.type+'</p></div><button class="close-btn" onclick="closePanel()">✕ Close</button></div><div class="connections-grid">';
   d.sections.forEach(function(s){
     html+='<p class="section-label">'+s.label+'</p><div class="conn-row">';
-    s.items.forEach(function(i){ html+='<span class="conn-tag '+s.color+'">'+i+'</span>'; });
+    s.items.forEach(function(i){ html+='<span class="conn-tag '+s.color+'">'+displayName(id,i)+'</span>'; });
     html+='</div>';
   });
   html+='</div>';
@@ -804,7 +815,8 @@ function renderBody(id, ports, q){
   var html='';
   ports.forEach(function(port){
     var k=destKey(id,port), dest=destinations[k]||'', sid=safeId(k);
-    var portHtml = q ? port.replace(new RegExp('('+q+')','gi'),'<mark>$1</mark>') : port;
+    var dn=displayName(id,port);
+    var portHtml = q ? dn.replace(new RegExp('('+q+')','gi'),'<mark>$1</mark>') : dn;
     html+='<div class="conn-line" id="line-'+sid+'">';
     html+='<span class="conn-port">'+portHtml+'</span>';
     html+='<span class="conn-dest'+(dest?' filled':'')+'" id="dest-'+sid+'">'+(dest||'— not assigned')+'</span>';
@@ -828,7 +840,7 @@ function onSearch(q){
       shown+=ports.length;
       return;
     }
-    var matched=ports.filter(function(p){ return p.toLowerCase().indexOf(q)>=0 || id.toLowerCase().indexOf(q)>=0 || boxes[id].name.toLowerCase().indexOf(q)>=0; });
+    var matched=ports.filter(function(p){ return p.toLowerCase().indexOf(q)>=0 || displayName(id,p).toLowerCase().indexOf(q)>=0 || id.toLowerCase().indexOf(q)>=0 || boxes[id].name.toLowerCase().indexOf(q)>=0; });
     if(matched.length===0){
       document.getElementById('acc-'+id).classList.add('hidden');
     } else {
@@ -850,10 +862,13 @@ var _mb=null,_mp=null;
 function openModal(boxId,port){
   _mb=boxId; _mp=port;
   document.getElementById('modal-box-name').textContent=boxes[boxId].name+(boxes[boxId].label?' — '+boxes[boxId].label:'');
-  document.getElementById('modal-title').textContent=port;
+  document.getElementById('modal-title').textContent=displayName(boxId,port);
+  var nameInput=document.getElementById('modal-name-input');
+  nameInput.value=names[nameKey(boxId,port)]||'';
+  nameInput.placeholder=port;
   document.getElementById('modal-input').value=destinations[destKey(boxId,port)]||'';
   document.getElementById('modal').classList.add('open');
-  setTimeout(function(){ document.getElementById('modal-input').focus(); },50);
+  setTimeout(function(){ nameInput.focus(); },50);
 }
 function closeModal(){ document.getElementById('modal').classList.remove('open'); _mb=null; _mp=null; }
 function saveModal(){
@@ -861,16 +876,25 @@ function saveModal(){
   var k=destKey(_mb,_mp), val=document.getElementById('modal-input').value.trim(), sid=safeId(k);
   if(val){ destinations[k]=val; } else { delete destinations[k]; }
   saveDest();
+  var nameVal=document.getElementById('modal-name-input').value.trim();
+  var nk=nameKey(_mb,_mp);
+  if(nameVal && nameVal!==_mp){ names[nk]=nameVal; } else { delete names[nk]; }
+  saveNames();
   var now=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
   localStorage.setItem('tlc_updated',now);
   updateTimestamp();
-  var destEl=document.getElementById('dest-'+sid);
-  var btnEl=destEl?destEl.nextElementSibling:null;
-  if(destEl){ destEl.textContent=val||'— not assigned'; destEl.className='conn-dest'+(val?' filled':''); }
-  if(btnEl){ btnEl.textContent=val?'Edit':'+ Add'; }
+  var lineEl=document.getElementById('line-'+sid);
+  if(lineEl){
+    var portEl=lineEl.querySelector('.conn-port'); if(portEl) portEl.textContent=displayName(_mb,_mp);
+    var destEl=lineEl.querySelector('.conn-dest');
+    var btnEl=destEl?destEl.nextElementSibling:null;
+    if(destEl){ destEl.textContent=val||'— not assigned'; destEl.className='conn-dest'+(val?' filled':''); }
+    if(btnEl){ btnEl.textContent=val?'Edit':'+ Add'; }
+  }
   var ports=allPorts(_mb);
   var filled=ports.filter(function(p){ return destinations[destKey(_mb,p)]; }).length;
   var cEl=document.getElementById('count-'+_mb); if(cEl) cEl.textContent=filled+'/'+ports.length+' assigned';
+  if(activeBox===_mb) showBox(_mb);
   closeModal();
 }
 document.getElementById('modal').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
