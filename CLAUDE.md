@@ -26,7 +26,7 @@ No build system, package manager, or dependencies. Open `index.html` directly in
 
 ## Architecture
 
-The entire application lives in `index.html` (~557 lines). There are no external scripts, frameworks, or stylesheets (only Google Fonts via CDN).
+The entire application lives in `index.html` (~870 lines). There are no external scripts, frameworks, or stylesheets (only Google Fonts via CDN). The file has proper HTML structure: `<!DOCTYPE html>`, `<head>` with charset + viewport meta, `<body>`, `</html>`.
 
 ### Core Data Structures
 
@@ -37,7 +37,7 @@ The entire application lives in `index.html` (~557 lines). There are no external
 
 | Type | CSS var | Examples |
 |------|---------|---------|
-| Wall Box (WB) | `--accent-amber` (#d4b74a) | Stage sides, walls, camera platform |
+| Wall Box (WB) | `--accent-amber` (#b8a040) | Stage sides, walls, camera platform |
 | Stage Floor Box (FBST) | `--accent-purple` | Microphone/guitar positions |
 | Floor Box (FB) | `--accent-green` | Camera monitoring positions |
 | FOH | `--accent-red` | Front-of-house booth positions |
