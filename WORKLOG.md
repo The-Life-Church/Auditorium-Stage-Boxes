@@ -2,7 +2,7 @@
 
 ## Current Tasks
 - [ ] Multi-site expansion — waiting on box/port data from other campuses for location dropdown
-- [ ] Style overhaul — match Easter schedule design system (see Decisions for full plan); color palette softened as interim step, full layout overhaul not yet started
+- [x] Style overhaul — Easter design shipped: light default, dark header (#252525), orange accent (#f2a649), card polish, pill badges
 
 ## Decisions
 2026-05-20 | Softened accent palette across the board — blue #4a9eff→#6096c8, green #4caf7d→#60a878, purple #9b7fe8→#8878c8, amber #f0a742→#c8a040, red #e8635a→#c86060. Updated every hardcoded hex and rgba in CSS, SVG, and light theme tints.
@@ -17,6 +17,7 @@
 - gotham_uJ50q.zip is still in the project folder (untracked) — safe to delete once fonts are confirmed working on live site
 
 ## Session Log
+2026-05-20 | Easter design overhaul shipped to main via PR. Light theme default, dark header (#252525) with orange accent (#f2a649), full HTML restructure to app-header/app-main, 14px card radius, pill badges. Branched, previewed, iterated, merged.
 2026-05-20 | Mobile pass + color refresh. Fixed missing viewport meta tag (root cause of all mobile CSS being ignored). Added responsive header, stacked connection rows, bottom sheet modal for input, larger touch targets, SVG expanded hit areas. Softened full color palette (all accents + SVG hardcoded colors). Fixed light theme SVG boxes showing square hit-area rect behind rounded corners.
 2026-04-26 | Replaced Montserrat with Gotham (Book/Medium/Bold/Black OTFs). Analyzed Easter schedule design system for full style overhaul — plan documented in Decisions. Overhaul not yet implemented.
 2026-04-15 | Added light/dark theme toggle — CSS variables, SVG floor plan support, header toggle button, localStorage persistence. Resolved merge conflict with main (Firebase auth branch). Deployed to https://tlc-wall-boxes.web.app via GitHub Actions (auto-deploy on push to main, ~34s).
